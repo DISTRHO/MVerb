@@ -20,13 +20,17 @@
 #define DISTRHO_UI_MVERB_HPP_INCLUDED
 
 #include "DistrhoUI.hpp"
+
 #include "ImageKnob.hpp"
+#include "NanoVG.hpp"
+
 #include "DistrhoArtworkMVerb.hpp"
 
 #include <vector>
 
 using DGL::Image;
 using DGL::ImageKnob;
+using DGL::NanoVG;
 
 START_NAMESPACE_DISTRHO
 
@@ -69,7 +73,8 @@ protected:
     void onDisplay() override;
 
 private:
-    Image fImgBackground;
+    Image  fImgBackground;
+    NanoVG fNanoText;
     std::vector<ImageKnob*> fKnobs;
 
     DISTRHO_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DistrhoUIMVerb)

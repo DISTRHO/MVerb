@@ -19,15 +19,49 @@
 #include "DistrhoUIMVerb.hpp"
 #include "MVerb.h"
 
+#include "font/Kh-Kangrey.h"
+
+using DGL::Rectangle;
+
 START_NAMESPACE_DISTRHO
 
 // -----------------------------------------------------------------------
 
+static int getKnobPosInUI(const int index)
+{
+    switch (index)
+    {
+    case MVerb<float>::DAMPINGFREQ:
+        return 7;
+    case MVerb<float>::DENSITY:
+        return 4;
+    case MVerb<float>::BANDWIDTHFREQ:
+        return 5;
+    case MVerb<float>::DECAY:
+        return 6;
+    case MVerb<float>::PREDELAY:
+        return 1;
+    case MVerb<float>::SIZE:
+        return 3;
+    case MVerb<float>::GAIN:
+        return 8;
+    case MVerb<float>::MIX:
+        return 0;
+    case MVerb<float>::EARLYMIX:
+        return 2;
+    default:
+        return 0;
+    }
+}
 DistrhoUIMVerb::DistrhoUIMVerb()
-    : UI()
+    : UI(),
+      fNanoText(1024, 1024)
 {
     // background
     fImgBackground = Image(DistrhoArtworkMVerb::backgroundData, DistrhoArtworkMVerb::backgroundWidth, DistrhoArtworkMVerb::backgroundHeight, GL_BGR);
+
+    // text
+    fNanoText.createFontMem("kh", (uchar*)khkangrey_ttf, khkangrey_ttfSize, false);
 
     // knobs
     Image knobImage(DistrhoArtworkMVerb::knobData, DistrhoArtworkMVerb::knobWidth, DistrhoArtworkMVerb::knobHeight);
@@ -38,38 +72,7 @@ DistrhoUIMVerb::DistrhoUIMVerb()
 
     for (int i=0; i<MVerb<float>::NUM_PARAMS; ++i)
     {
-        int x = 0;
-        switch (i)
-        {
-        case MVerb<float>::DAMPINGFREQ:
-            x = 7;
-            break;
-        case MVerb<float>::DENSITY:
-            x = 4;
-            break;
-        case MVerb<float>::BANDWIDTHFREQ:
-            x = 5;
-            break;
-        case MVerb<float>::DECAY:
-            x = 6;
-            break;
-        case MVerb<float>::PREDELAY:
-            x = 1;
-            break;
-        case MVerb<float>::SIZE:
-            x = 3;
-            break;
-        case MVerb<float>::GAIN:
-            x = 8;
-            break;
-        case MVerb<float>::MIX:
-            x = 0;
-            break;
-        case MVerb<float>::EARLYMIX:
-            x = 2;
-            break;
-        }
-
+        const int x(getKnobPosInUI(i));
         ImageKnob* const knob(new ImageKnob(this, knobImage, ImageKnob::Vertical, i));
         knob->setAbsolutePos(56 + x*40, 40);
         knob->setRange(0.0f, 100.0f);
@@ -189,6 +192,29 @@ void DistrhoUIMVerb::imageKnobValueChanged(ImageKnob* knob, float value)
 void DistrhoUIMVerb::onDisplay()
 {
     fImgBackground.draw();
+
+    // text display
+    fNanoText.beginFrame(getWidth(), getHeight());
+
+    fNanoText.fontFace("kh");
+    fNanoText.fontSize(20);
+    fNanoText.textAlign(NanoVG::Align(NanoVG::ALIGN_CENTER|NanoVG::ALIGN_TOP));
+    fNanoText.fillColor(NanoVG::RGBf(1.0f, 1.0f, 1.0f));
+
+    char strBuf[32+1];
+    strBuf[32] = '\0';
+
+    for (int i=0; i<MVerb<float>::NUM_PARAMS; ++i)
+    {
+        const int x(getKnobPosInUI(i));
+        std::snprintf(strBuf, 32, "%i%%", int(fKnobs[i]->getValue()));
+        fNanoText.textBox(58 + x*40, 73, 30.0f, strBuf, nullptr);
+    }
+
+    fNanoText.endFrame();
+
+    // just in case
+    glDisable(GL_CULL_FACE);
 }
 
 // -----------------------------------------------------------------------
