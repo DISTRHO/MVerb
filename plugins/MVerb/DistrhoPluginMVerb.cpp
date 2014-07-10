@@ -37,8 +37,8 @@ DistrhoPluginMVerb::DistrhoPluginMVerb()
 void DistrhoPluginMVerb::d_initParameter(uint32_t index, Parameter& parameter)
 {
     parameter.unit       = "%";
-    parameter.ranges.min = 0.0f * 100.0f;
-    parameter.ranges.max = 1.0f * 100.0f;
+    parameter.ranges.min = 0.0f;
+    parameter.ranges.max = 100.0f;
 
     // default values taken from 1st preset
     switch (index)
@@ -47,7 +47,6 @@ void DistrhoPluginMVerb::d_initParameter(uint32_t index, Parameter& parameter)
         parameter.hints      = PARAMETER_IS_AUTOMABLE;
         parameter.name       = "Damping";
         parameter.symbol     = "damping";
-        parameter.unit       = "%";
         parameter.ranges.def = 0.5f * 100.0f;
         break;
     case MVerb<float>::DENSITY:
@@ -79,6 +78,7 @@ void DistrhoPluginMVerb::d_initParameter(uint32_t index, Parameter& parameter)
         parameter.name       = "Size";
         parameter.symbol     = "size";
         parameter.ranges.def = 0.75f * 100.0f;
+        parameter.ranges.min = 0.05f * 100.0f;
         break;
     case MVerb<float>::GAIN:
         parameter.hints      = PARAMETER_IS_AUTOMABLE;
@@ -138,6 +138,8 @@ void DistrhoPluginMVerb::d_setParameterValue(uint32_t index, float value)
 
 void DistrhoPluginMVerb::d_setProgram(uint32_t index)
 {
+    // NOTE: DAMPINGFREQ is reversed
+
     switch(index)
     {
     case 0:
@@ -146,13 +148,13 @@ void DistrhoPluginMVerb::d_setProgram(uint32_t index)
         fVerb.setParameter(MVerb<float>::BANDWIDTHFREQ, 0.5f);
         fVerb.setParameter(MVerb<float>::DECAY, 0.5f);
         fVerb.setParameter(MVerb<float>::PREDELAY, 0.5f);
+        fVerb.setParameter(MVerb<float>::SIZE, 0.75f);
         fVerb.setParameter(MVerb<float>::GAIN, 1.0f);
         fVerb.setParameter(MVerb<float>::MIX, 0.5f);
         fVerb.setParameter(MVerb<float>::EARLYMIX, 0.5f);
-        fVerb.setParameter(MVerb<float>::SIZE, 0.75f);
         break;
     case 1:
-        fVerb.setParameter(MVerb<float>::DAMPINGFREQ, 0.9f);
+        fVerb.setParameter(MVerb<float>::DAMPINGFREQ, 0.1f);
         fVerb.setParameter(MVerb<float>::DENSITY, 0.5f);
         fVerb.setParameter(MVerb<float>::BANDWIDTHFREQ, 0.1f);
         fVerb.setParameter(MVerb<float>::DECAY, 0.5f);
@@ -163,7 +165,7 @@ void DistrhoPluginMVerb::d_setProgram(uint32_t index)
         fVerb.setParameter(MVerb<float>::EARLYMIX, 0.75f);
         break;
     case 2:
-        fVerb.setParameter(MVerb<float>::DAMPINGFREQ, 0.0f);
+        fVerb.setParameter(MVerb<float>::DAMPINGFREQ, 1.0f);
         fVerb.setParameter(MVerb<float>::DENSITY, 0.5f);
         fVerb.setParameter(MVerb<float>::BANDWIDTHFREQ, 1.0f);
         fVerb.setParameter(MVerb<float>::DECAY, 0.5f);
@@ -174,7 +176,7 @@ void DistrhoPluginMVerb::d_setProgram(uint32_t index)
         fVerb.setParameter(MVerb<float>::EARLYMIX, 0.75f);
         break;
     case 3:
-        fVerb.setParameter(MVerb<float>::DAMPINGFREQ, 0.0f);
+        fVerb.setParameter(MVerb<float>::DAMPINGFREQ, 1.0f);
         fVerb.setParameter(MVerb<float>::DENSITY, 0.5f);
         fVerb.setParameter(MVerb<float>::BANDWIDTHFREQ, 1.0f);
         fVerb.setParameter(MVerb<float>::DECAY, 0.5f);
@@ -185,7 +187,7 @@ void DistrhoPluginMVerb::d_setProgram(uint32_t index)
         fVerb.setParameter(MVerb<float>::EARLYMIX, 0.75f);
         break;
     case 4:
-        fVerb.setParameter(MVerb<float>::DAMPINGFREQ, 0.0f);
+        fVerb.setParameter(MVerb<float>::DAMPINGFREQ, 1.0f);
         fVerb.setParameter(MVerb<float>::DENSITY, 0.5f);
         fVerb.setParameter(MVerb<float>::BANDWIDTHFREQ, 1.0f);
         fVerb.setParameter(MVerb<float>::DECAY, 0.5f);

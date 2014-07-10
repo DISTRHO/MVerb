@@ -74,13 +74,13 @@ DistrhoUIMVerb::DistrhoUIMVerb()
         knob->setAbsolutePos(56 + x*40, 40);
         knob->setRange(0.0f, 100.0f);
         knob->setDefault(50.0f);
-        knob->setRotationAngle(270);
         knob->setCallback(this);
 
         fKnobs[i] = knob;
     }
 
     fKnobs[MVerb<float>::GAIN]->setDefault(75.0f);
+    fKnobs[MVerb<float>::SIZE]->setRange(5.0f, 100.0f);
     fKnobs[MVerb<float>::SIZE]->setDefault(100.0f);
 
     // set initial values

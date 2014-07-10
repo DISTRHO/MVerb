@@ -240,7 +240,7 @@ public:
     void setParameter(int index, T value){
         switch(index){
         case DAMPINGFREQ:
-            DampingFreq =  1. - value;
+            DampingFreq =  /* 1. - */ value; // FIXME?
             break;
         case DENSITY:
             Density1 = value;
@@ -252,7 +252,7 @@ public:
             PreDelayTime = value;
             break;
         case SIZE:
-            Size = (0.95 * value) + 0.05;
+            Size = value;
             allpassFourTap[0].Clear();
             allpassFourTap[1].Clear();
             allpassFourTap[2].Clear();
@@ -294,31 +294,31 @@ public:
     float getParameter(int index) const{
         switch(index){
         case DAMPINGFREQ:
-            return DampingFreq * 100.;
+            return DampingFreq;
             break;
         case DENSITY:
-            return Density1 * 100.f;
+            return Density1;
             break;
         case BANDWIDTHFREQ:
-            return BandwidthFreq * 100.;
+            return BandwidthFreq;
             break;
         case PREDELAY:
-            return PreDelayTime * 100.;
+            return PreDelayTime;
             break;
         case SIZE:
-            return (((0.95 * Size) + 0.05)*100.);
+            return Size;
             break;
         case DECAY:
-            return Decay * 100.f;
+            return Decay;
             break;
         case GAIN:
-            return Gain * 100.f;
+            return Gain;
             break;
         case MIX:
-            return Mix * 100.f;
+            return Mix;
             break;
         case EARLYMIX:
-            return EarlyMix * 100.f;
+            return EarlyMix;
             break;
         default: return 0.f;
             break;
