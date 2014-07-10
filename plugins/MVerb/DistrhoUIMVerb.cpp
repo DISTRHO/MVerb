@@ -21,8 +21,6 @@
 
 #include "font/Kh-Kangrey.h"
 
-using DGL::Rectangle;
-
 START_NAMESPACE_DISTRHO
 
 // -----------------------------------------------------------------------
@@ -54,8 +52,7 @@ static int getKnobPosInUI(const int index)
     }
 }
 DistrhoUIMVerb::DistrhoUIMVerb()
-    : UI(),
-      fNanoText(1024, 1024)
+    : UI()
 {
     // background
     fImgBackground = Image(DistrhoArtworkMVerb::backgroundData, DistrhoArtworkMVerb::backgroundWidth, DistrhoArtworkMVerb::backgroundHeight, GL_BGR);
