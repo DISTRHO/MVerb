@@ -25,32 +25,6 @@ START_NAMESPACE_DISTRHO
 
 // -----------------------------------------------------------------------
 
-static int getKnobPosInUI(const int index)
-{
-    switch (index)
-    {
-    case MVerb<float>::DAMPINGFREQ:
-        return 7;
-    case MVerb<float>::DENSITY:
-        return 4;
-    case MVerb<float>::BANDWIDTHFREQ:
-        return 5;
-    case MVerb<float>::DECAY:
-        return 6;
-    case MVerb<float>::PREDELAY:
-        return 1;
-    case MVerb<float>::SIZE:
-        return 3;
-    case MVerb<float>::GAIN:
-        return 8;
-    case MVerb<float>::MIX:
-        return 0;
-    case MVerb<float>::EARLYMIX:
-        return 2;
-    default:
-        return 0;
-    }
-}
 DistrhoUIMVerb::DistrhoUIMVerb()
     : UI()
 {
@@ -63,25 +37,78 @@ DistrhoUIMVerb::DistrhoUIMVerb()
     // knobs
     Image knobImage(DistrhoArtworkMVerb::knobData, DistrhoArtworkMVerb::knobWidth, DistrhoArtworkMVerb::knobHeight);
 
-    // the knobs on the UI don't follow the parameter order
-    for (int i=0; i<MVerb<float>::NUM_PARAMS; ++i)
-        fKnobs.push_back(nullptr);
-
-    for (int i=0; i<MVerb<float>::NUM_PARAMS; ++i)
     {
-        const int x(getKnobPosInUI(i));
-        ImageKnob* const knob(new ImageKnob(this, knobImage, ImageKnob::Vertical, i));
-        knob->setAbsolutePos(56 + x*40, 40);
+        ImageKnob* const knob(new ImageKnob(this, knobImage, ImageKnob::Vertical, MVerb<float>::DAMPINGFREQ));
+        knob->setAbsolutePos(56 + 7*40, 40);
         knob->setRange(0.0f, 100.0f);
         knob->setDefault(50.0f);
         knob->setCallback(this);
-
-        fKnobs[i] = knob;
+        fKnobs.push_back(knob);
     }
-
-    fKnobs[MVerb<float>::GAIN]->setDefault(75.0f);
-    fKnobs[MVerb<float>::SIZE]->setRange(5.0f, 100.0f);
-    fKnobs[MVerb<float>::SIZE]->setDefault(100.0f);
+    {
+        ImageKnob* const knob(new ImageKnob(this, knobImage, ImageKnob::Vertical, MVerb<float>::DENSITY));
+        knob->setAbsolutePos(56 + 4*40, 40);
+        knob->setRange(0.0f, 100.0f);
+        knob->setDefault(50.0f);
+        knob->setCallback(this);
+        fKnobs.push_back(knob);
+    }
+    {
+        ImageKnob* const knob(new ImageKnob(this, knobImage, ImageKnob::Vertical, MVerb<float>::BANDWIDTHFREQ));
+        knob->setAbsolutePos(56 + 5*40, 40);
+        knob->setRange(0.0f, 100.0f);
+        knob->setDefault(50.0f);
+        knob->setCallback(this);
+        fKnobs.push_back(knob);
+    }
+    {
+        ImageKnob* const knob(new ImageKnob(this, knobImage, ImageKnob::Vertical, MVerb<float>::DECAY));
+        knob->setAbsolutePos(56 + 6*40, 40);
+        knob->setRange(0.0f, 100.0f);
+        knob->setDefault(50.0f);
+        knob->setCallback(this);
+        fKnobs.push_back(knob);
+    }
+    {
+        ImageKnob* const knob(new ImageKnob(this, knobImage, ImageKnob::Vertical, MVerb<float>::PREDELAY));
+        knob->setAbsolutePos(56 + 1*40, 40);
+        knob->setRange(0.0f, 100.0f);
+        knob->setDefault(50.0f);
+        knob->setCallback(this);
+        fKnobs.push_back(knob);
+    }
+    {
+        ImageKnob* const knob(new ImageKnob(this, knobImage, ImageKnob::Vertical, MVerb<float>::SIZE));
+        knob->setAbsolutePos(56 + 3*40, 40);
+        knob->setRange(5.0f, 100.0f);
+        knob->setDefault(100.0f);
+        knob->setCallback(this);
+        fKnobs.push_back(knob);
+    }
+    {
+        ImageKnob* const knob(new ImageKnob(this, knobImage, ImageKnob::Vertical, MVerb<float>::GAIN));
+        knob->setAbsolutePos(56 + 8*40, 40);
+        knob->setRange(0.0f, 100.0f);
+        knob->setDefault(75.0f);
+        knob->setCallback(this);
+        fKnobs.push_back(knob);
+    }
+    {
+        ImageKnob* const knob(new ImageKnob(this, knobImage, ImageKnob::Vertical, MVerb<float>::MIX));
+        knob->setAbsolutePos(56 + 0*40, 40);
+        knob->setRange(0.0f, 100.0f);
+        knob->setDefault(50.0f);
+        knob->setCallback(this);
+        fKnobs.push_back(knob);
+    }
+    {
+        ImageKnob* const knob(new ImageKnob(this, knobImage, ImageKnob::Vertical, MVerb<float>::EARLYMIX));
+        knob->setAbsolutePos(56 + 2*40, 40);
+        knob->setRange(0.0f, 100.0f);
+        knob->setDefault(50.0f);
+        knob->setCallback(this);
+        fKnobs.push_back(knob);
+    }
 
     // set initial values
     d_programChanged(0);
@@ -203,9 +230,8 @@ void DistrhoUIMVerb::onDisplay()
 
     for (int i=0; i<MVerb<float>::NUM_PARAMS; ++i)
     {
-        const int x(getKnobPosInUI(i));
         std::snprintf(strBuf, 32, "%i%%", int(fKnobs[i]->getValue()));
-        fNanoText.textBox(58 + x*40, 73, 30.0f, strBuf, nullptr);
+        fNanoText.textBox(58 + fKnobs[i]->getAbsoluteX()-56, 73, 30.0f, strBuf, nullptr);
     }
 
     fNanoText.endFrame();
