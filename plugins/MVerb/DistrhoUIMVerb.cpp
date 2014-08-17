@@ -23,6 +23,8 @@
 
 START_NAMESPACE_DISTRHO
 
+using DGL::Color;
+
 // -----------------------------------------------------------------------
 
 DistrhoUIMVerb::DistrhoUIMVerb()
@@ -223,7 +225,7 @@ void DistrhoUIMVerb::onDisplay()
     fNanoText.fontFace("kh");
     fNanoText.fontSize(20);
     fNanoText.textAlign(NanoVG::Align(NanoVG::ALIGN_CENTER|NanoVG::ALIGN_TOP));
-    fNanoText.fillColor(NanoVG::RGBf(1.0f, 1.0f, 1.0f));
+    fNanoText.fillColor(Color(1.0f, 1.0f, 1.0f));
 
     char strBuf[32+1];
     strBuf[32] = '\0';

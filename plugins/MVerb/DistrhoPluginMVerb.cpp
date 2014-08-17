@@ -44,56 +44,56 @@ void DistrhoPluginMVerb::d_initParameter(uint32_t index, Parameter& parameter)
     switch (index)
     {
     case MVerb<float>::DAMPINGFREQ:
-        parameter.hints      = PARAMETER_IS_AUTOMABLE;
+        parameter.hints      = kParameterIsAutomable;
         parameter.name       = "Damping";
         parameter.symbol     = "damping";
         parameter.ranges.def = 0.5f * 100.0f;
         break;
     case MVerb<float>::DENSITY:
-        parameter.hints      = PARAMETER_IS_AUTOMABLE;
+        parameter.hints      = kParameterIsAutomable;
         parameter.name       = "Density";
         parameter.symbol     = "density";
         parameter.ranges.def = 0.5f * 100.0f;
         break;
     case MVerb<float>::BANDWIDTHFREQ:
-        parameter.hints      = PARAMETER_IS_AUTOMABLE;
+        parameter.hints      = kParameterIsAutomable;
         parameter.name       = "Bandwidth";
         parameter.symbol     = "bandwidth";
         parameter.ranges.def = 0.5f * 100.0f;
         break;
     case MVerb<float>::DECAY:
-        parameter.hints      = PARAMETER_IS_AUTOMABLE;
+        parameter.hints      = kParameterIsAutomable;
         parameter.name       = "Decay";
         parameter.symbol     = "decay";
         parameter.ranges.def = 0.5f * 100.0f;
         break;
     case MVerb<float>::PREDELAY:
-        parameter.hints      = PARAMETER_IS_AUTOMABLE;
+        parameter.hints      = kParameterIsAutomable;
         parameter.name       = "Predelay";
         parameter.symbol     = "predelay";
         parameter.ranges.def = 0.5f * 100.0f;
         break;
     case MVerb<float>::SIZE:
-        parameter.hints      = PARAMETER_IS_AUTOMABLE;
+        parameter.hints      = kParameterIsAutomable;
         parameter.name       = "Size";
         parameter.symbol     = "size";
         parameter.ranges.def = 0.75f * 100.0f;
         parameter.ranges.min = 0.05f * 100.0f;
         break;
     case MVerb<float>::GAIN:
-        parameter.hints      = PARAMETER_IS_AUTOMABLE;
+        parameter.hints      = kParameterIsAutomable;
         parameter.name       = "Gain";
         parameter.symbol     = "gain";
         parameter.ranges.def = 1.0f * 100.0f;
         break;
     case MVerb<float>::MIX:
-        parameter.hints      = PARAMETER_IS_AUTOMABLE;
+        parameter.hints      = kParameterIsAutomable;
         parameter.name       = "Mix";
         parameter.symbol     = "mix";
         parameter.ranges.def = 0.5f * 100.0f;
         break;
     case MVerb<float>::EARLYMIX:
-        parameter.hints      = PARAMETER_IS_AUTOMABLE;
+        parameter.hints      = kParameterIsAutomable;
         parameter.name       = "Early/Late Mix";
         parameter.symbol     = "earlymix";
         parameter.ranges.def = 0.5f * 100.0f;
