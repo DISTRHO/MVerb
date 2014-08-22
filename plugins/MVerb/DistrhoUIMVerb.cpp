@@ -30,6 +30,9 @@ using DGL::Color;
 DistrhoUIMVerb::DistrhoUIMVerb()
     : UI()
 {
+    // set UI size
+    setSize(DistrhoArtworkMVerb::backgroundWidth, DistrhoArtworkMVerb::backgroundHeight);
+
     // background
     fImgBackground = Image(DistrhoArtworkMVerb::backgroundData, DistrhoArtworkMVerb::backgroundWidth, DistrhoArtworkMVerb::backgroundHeight, GL_BGR);
 
