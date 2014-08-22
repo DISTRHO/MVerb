@@ -42,7 +42,7 @@ protected:
 
     const char* d_getMaker() const noexcept override
     {
-        return "falkTX, Martin Eastwood";
+        return "Martin Eastwood, falkTX";
     }
 
     const char* d_getLicense() const noexcept override
@@ -55,7 +55,7 @@ protected:
         return 0x1000;
     }
 
-    long d_getUniqueId() const noexcept override
+    int64_t d_getUniqueId() const noexcept override
     {
         return d_cconst('M', 'V', 'r', 'b');
     }
