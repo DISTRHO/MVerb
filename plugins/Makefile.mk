@@ -16,6 +16,18 @@ TARGET_DIR = ../../bin
 BUILD_C_FLAGS   += -I.
 BUILD_CXX_FLAGS += -I. -I../../dpf/distrho -I../../dpf/dgl
 
+ifeq ($(HAVE_DGL),true)
+BASE_FLAGS += -DHAVE_DGL
+endif
+
+ifeq ($(HAVE_JACK),true)
+BASE_FLAGS += -DHAVE_JACK
+endif
+
+ifeq ($(HAVE_LIBLO),true)
+BASE_FLAGS += -DHAVE_LIBLO
+endif
+
 # --------------------------------------------------------------
 # Set plugin binary file targets
 
@@ -38,7 +50,12 @@ endif
 # Set distrho code files
 
 DISTRHO_PLUGIN_FILES = ../../dpf/distrho/DistrhoPluginMain.cpp
+
+ifeq ($(HAVE_DGL),true)
 DISTRHO_UI_FILES     = ../../dpf/distrho/DistrhoUIMain.cpp ../../dpf/libdgl.a
+else
+TARGET_NOUI          = true
+endif
 
 # --------------------------------------------------------------
 # Handle plugins without UI
@@ -76,7 +93,7 @@ jack: $(jack)
 
 $(jack): $(OBJS_DSP) $(OBJS_UI) $(DISTRHO_PLUGIN_FILES) $(DISTRHO_UI_FILES)
 	mkdir -p $(shell dirname $@)
-	$(CXX) $^ $(BUILD_CXX_FLAGS) $(LINK_FLAGS) $(DGL_LIBS) $(shell pkg-config --cflags --libs jack) -lpthread -DDISTRHO_PLUGIN_TARGET_JACK -o $@
+	$(CXX) $^ $(BUILD_CXX_FLAGS) $(LINK_FLAGS) $(DGL_LIBS) $(shell pkg-config --cflags --libs jack) -DDISTRHO_PLUGIN_TARGET_JACK -o $@
 
 # --------------------------------------------------------------
 # LADSPA
@@ -94,7 +111,7 @@ dssi: $(dssi_dsp) $(dssi_ui)
 
 $(dssi_dsp): $(OBJS_DSP) $(DISTRHO_PLUGIN_FILES)
 	mkdir -p $(shell dirname $@)
-	$(CXX) $^ $(BUILD_CXX_FLAGS) $(LINK_FLAGS) -lpthread $(SHARED) -DDISTRHO_PLUGIN_TARGET_DSSI -o $@
+	$(CXX) $^ $(BUILD_CXX_FLAGS) $(LINK_FLAGS) $(SHARED) -DDISTRHO_PLUGIN_TARGET_DSSI -o $@
 
 $(dssi_ui): $(OBJS_UI) $(DISTRHO_UI_FILES)
 	mkdir -p $(shell dirname $@)
@@ -104,15 +121,16 @@ $(dssi_ui): $(OBJS_UI) $(DISTRHO_UI_FILES)
 # LV2
 
 lv2_one: $(lv2)
+lv2_dsp: $(lv2_dsp)
 lv2_sep: $(lv2_dsp) $(lv2_ui)
 
 $(lv2): $(OBJS_DSP) $(OBJS_UI) $(DISTRHO_PLUGIN_FILES) $(DISTRHO_UI_FILES)
 	mkdir -p $(shell dirname $@)
-	$(CXX) $^ $(BUILD_CXX_FLAGS) $(LINK_FLAGS) $(DGL_LIBS) -lpthread $(SHARED) -DDISTRHO_PLUGIN_TARGET_LV2 -o $@
+	$(CXX) $^ $(BUILD_CXX_FLAGS) $(LINK_FLAGS) $(DGL_LIBS) $(SHARED) -DDISTRHO_PLUGIN_TARGET_LV2 -o $@
 
 $(lv2_dsp): $(OBJS_DSP) $(DISTRHO_PLUGIN_FILES)
 	mkdir -p $(shell dirname $@)
-	$(CXX) $^ $(BUILD_CXX_FLAGS) $(LINK_FLAGS) -lpthread $(SHARED) -DDISTRHO_PLUGIN_TARGET_LV2 -o $@
+	$(CXX) $^ $(BUILD_CXX_FLAGS) $(LINK_FLAGS) $(SHARED) -DDISTRHO_PLUGIN_TARGET_LV2 -o $@
 
 $(lv2_ui): $(OBJS_UI) $(DISTRHO_UI_FILES)
 	mkdir -p $(shell dirname $@)
@@ -125,6 +143,6 @@ vst: $(vst)
 
 $(vst): $(OBJS_DSP) $(OBJS_UI) $(DISTRHO_PLUGIN_FILES) $(DISTRHO_UI_FILES)
 	mkdir -p $(shell dirname $@)
-	$(CXX) $^ $(BUILD_CXX_FLAGS) $(LINK_FLAGS) $(DGL_LIBS) -lpthread $(SHARED) -DDISTRHO_PLUGIN_TARGET_VST -o $@
+	$(CXX) $^ $(BUILD_CXX_FLAGS) $(LINK_FLAGS) $(DGL_LIBS) $(SHARED) -DDISTRHO_PLUGIN_TARGET_VST -o $@
 
 # --------------------------------------------------------------
