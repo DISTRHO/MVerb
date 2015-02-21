@@ -40,12 +40,6 @@ lv2_dsp    = $(TARGET_DIR)/$(NAME).lv2/$(NAME)_dsp.$(EXT)
 lv2_ui     = $(TARGET_DIR)/$(NAME).lv2/$(NAME)_ui.$(EXT)
 vst        = $(TARGET_DIR)/$(NAME)-vst.$(EXT)
 
-ifeq ($(WIN32),true)
-dssi_ui += .exe
-endif
-
-# TODO: MacOS VST bundle
-
 # --------------------------------------------------------------
 # Set distrho code files
 
@@ -107,7 +101,9 @@ $(ladspa_dsp): $(OBJS_DSP) $(DISTRHO_PLUGIN_FILES)
 # --------------------------------------------------------------
 # DSSI
 
-dssi: $(dssi_dsp) $(dssi_ui)
+dssi:     $(dssi_dsp) $(dssi_ui)
+dssi_dsp: $(dssi_dsp)
+dssi_ui:  $(dssi_ui)
 
 $(dssi_dsp): $(OBJS_DSP) $(DISTRHO_PLUGIN_FILES)
 	mkdir -p $(shell dirname $@)
