@@ -18,7 +18,7 @@ OBJS_DSP = \
 OBJS_UI  = \
 	DistrhoArtworkMVerb.cpp.o \
 	DistrhoUIMVerb.cpp.o \
-	font/Kh-Kangrey.cpp
+	font/Kh-Kangrey.cpp.o
 
 # --------------------------------------------------------------
 # Do some magic
