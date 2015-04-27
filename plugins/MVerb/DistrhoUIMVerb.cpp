@@ -246,9 +246,6 @@ void DistrhoUIMVerb::onDisplay()
     }
 
     fNanoText.endFrame();
-
-    // just in case
-    glDisable(GL_CULL_FACE);
 }
 
 // -----------------------------------------------------------------------
