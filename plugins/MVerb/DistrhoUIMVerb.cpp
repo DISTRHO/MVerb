@@ -34,7 +34,7 @@ DistrhoUIMVerb::DistrhoUIMVerb()
       fImgBackground(Art::backgroundData, Art::backgroundWidth, Art::backgroundHeight, GL_BGR)
 {
     // text
-    fNanoText.createFontMem("kh", (const uchar*)khkangrey_ttf, khkangrey_ttfSize, false);
+    fNanoText.createFontFromMemory("kh", (const uchar*)khkangrey_ttf, khkangrey_ttfSize, false);
 
     // knobs
     Image knobImage(Art::knobData, Art::knobWidth, Art::knobHeight);

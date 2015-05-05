@@ -20,9 +20,8 @@
 #define DISTRHO_UI_MVERB_HPP_INCLUDED
 
 #include "DistrhoUI.hpp"
-
-#include "ImageKnob.hpp"
 #include "NanoVG.hpp"
+#include "ImageWidgets.hpp"
 
 #include "DistrhoArtworkMVerb.hpp"
 
