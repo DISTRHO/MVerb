@@ -229,11 +229,11 @@ void DistrhoUIMVerb::onDisplay()
     fImgBackground.draw();
 
     // text display
-    fNanoText.beginFrame(getWidth(), getHeight());
+    fNanoText.beginFrame(this);
 
     fNanoText.fontFace("kh");
     fNanoText.fontSize(20);
-    fNanoText.textAlign(NanoVG::Align(NanoVG::ALIGN_CENTER|NanoVG::ALIGN_TOP));
+    fNanoText.textAlign(NanoVG::ALIGN_CENTER|NanoVG::ALIGN_TOP);
     fNanoText.fillColor(Color(1.0f, 1.0f, 1.0f));
 
     char strBuf[32+1];
@@ -242,7 +242,7 @@ void DistrhoUIMVerb::onDisplay()
     for (std::size_t i=0; i<MVerb<float>::NUM_PARAMS; ++i)
     {
         std::snprintf(strBuf, 32, "%i%%", int(fKnobs[i]->getValue()));
-        fNanoText.textBox(58 + fKnobs[i]->getAbsoluteX()-56, 73, 30.0f, strBuf, nullptr);
+        fNanoText.textBox(58.0f + float(fKnobs[i]->getAbsoluteX()) - 56.0f, 73.0f, 30.0f, strBuf, nullptr);
     }
 
     fNanoText.endFrame();
