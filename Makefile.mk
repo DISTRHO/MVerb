@@ -98,7 +98,8 @@ HAVE_DGL = true
 endif
 
 ifeq ($(WIN32),true)
-HAVE_DGL = true
+# FIXME: make OpenGL >= 2 work with mingw
+HAVE_DGL = false
 endif
 
 # --------------------------------------------------------------
