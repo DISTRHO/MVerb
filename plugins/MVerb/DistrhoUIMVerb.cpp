@@ -19,8 +19,6 @@
 #include "DistrhoUIMVerb.hpp"
 #include "MVerb.h"
 
-#include "font/Kh-Kangrey.h"
-
 START_NAMESPACE_DISTRHO
 
 namespace Art = DistrhoArtworkMVerb;
