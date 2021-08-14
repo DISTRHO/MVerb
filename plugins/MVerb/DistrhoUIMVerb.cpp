@@ -123,8 +123,8 @@ DistrhoUIMVerb::DistrhoUIMVerb()
     // set initial values
     programLoaded(0);
 
-    // TODO auto-scale but non-resizable
-    // setGeometryConstraints(Art::backgroundWidth, Art::backgroundHeight, true, true);
+    // automatically-scale
+    setGeometryConstraints(Art::backgroundWidth, Art::backgroundHeight, true, true);
 }
 
 DistrhoUIMVerb::~DistrhoUIMVerb()
