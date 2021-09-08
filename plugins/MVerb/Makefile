@@ -29,7 +29,7 @@ include ../../dpf/Makefile.plugins.mk
 
 TARGETS += jack
 TARGETS += ladspa
-TARGETS += vst
+TARGETS += vst2
 
 ifeq ($(HAVE_DGL),true)
 ifeq ($(HAVE_LIBLO),true)

@@ -158,7 +158,7 @@ jobs:
         run: |
           make features
           make NOOPT=true -j $(sysctl -n hw.logicalcpu)
-          ./utils/package-osx-bundles.sh
+          ./dpf/utils/package-osx-bundles.sh
       - name: Set sha8
         id: slug
         run: echo "::set-output name=sha8::$(echo ${{ github.sha }} | cut -c1-8)"
