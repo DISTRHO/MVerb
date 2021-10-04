@@ -29,18 +29,14 @@ include ../../dpf/Makefile.plugins.mk
 
 TARGETS += jack
 TARGETS += ladspa
+TARGETS += lv2_sep
 TARGETS += vst2
+TARGETS += vst3
 
 ifeq ($(HAVE_DGL),true)
 ifeq ($(HAVE_LIBLO),true)
 TARGETS += dssi
 endif
-endif
-
-ifeq ($(HAVE_DGL),true)
-TARGETS += lv2_sep
-else
-TARGETS += lv2_dsp
 endif
 
 all: $(TARGETS)
