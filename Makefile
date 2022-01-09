@@ -12,7 +12,7 @@ all: dgl plugins gen
 
 dgl:
 ifeq ($(HAVE_OPENGL),true)
-	$(MAKE) -C dpf/dgl opengl
+	$(MAKE) -C dpf/dgl opengl FILE_BROWSER_DISABLED=true
 endif
 
 plugins: dgl
